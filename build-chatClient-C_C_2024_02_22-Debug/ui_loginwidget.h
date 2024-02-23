@@ -20,16 +20,16 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <animationstackwidget.h>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_LoginWidget
 {
 public:
-    QStackedWidget *stackedWidget;
+    AnimationStackWidget *stackedWidget;
     QWidget *page;
     QVBoxLayout *verticalLayout_2;
     QWidget *widgetWinTitle;
@@ -87,7 +87,7 @@ public:
         LoginWidget->setStyleSheet(QString::fromUtf8("QWidget#LoginWidget{\n"
 "	border-radius:10px;\n"
 "}"));
-        stackedWidget = new QStackedWidget(LoginWidget);
+        stackedWidget = new AnimationStackWidget(LoginWidget);
         stackedWidget->setObjectName("stackedWidget");
         stackedWidget->setGeometry(QRect(10, 10, 370, 294));
         stackedWidget->setLayoutDirection(Qt::LeftToRight);

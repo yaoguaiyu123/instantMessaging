@@ -19,6 +19,9 @@ public:
 
 private slots:
     void on_btnWinClose_clicked();
+    void on_btnWinMenu_clicked();
+    void on_btnCancel_clicked();
+    void on_btnWinClose_2_clicked();
 
 private:
     Ui::LoginWidget *ui;

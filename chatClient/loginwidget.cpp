@@ -17,6 +17,8 @@ LoginWidget::LoginWidget(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);
     //使透明生效
     this->setAttribute(Qt::WA_TranslucentBackground);
+
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 LoginWidget::~LoginWidget()
@@ -24,8 +26,30 @@ LoginWidget::~LoginWidget()
     delete ui;
 }
 
-//关闭按钮槽函数
+//widget1关闭按钮槽函数
 void LoginWidget::on_btnWinClose_clicked()
+{
+    close();
+}
+
+// 点击页面翻转按钮
+void LoginWidget::on_btnWinMenu_clicked()
+{
+    ui->stackedWidget->setStartVal(0);
+    ui->stackedWidget->setEndVal(180);
+    ui->stackedWidget->animation(1);
+}
+
+// 取消按钮，执行页面翻转
+void LoginWidget::on_btnCancel_clicked()
+{
+    ui->stackedWidget->setStartVal(0);
+    ui->stackedWidget->setEndVal(-180);
+    ui->stackedWidget->animation(0);
+}
+
+//widget2关闭按钮槽函数
+void LoginWidget::on_btnWinClose_2_clicked()
 {
     close();
 }

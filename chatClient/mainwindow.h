@@ -11,8 +11,8 @@ QT_END_NAMESPACE
 {
     Q_OBJECT
 
-        public:
-                 MainWindow(QWidget *parent = nullptr);
+public:
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:

@@ -18,7 +18,7 @@
 	border-radius:10px;
 }</string>
   </property>
-  <widget class="QStackedWidget" name="stackedWidget">
+  <widget class="AnimationStackWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -563,6 +563,14 @@
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AnimationStackWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">animationstackwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resource.qrc"/>
  </resources>
