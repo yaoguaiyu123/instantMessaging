@@ -23,6 +23,7 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <animationstackwidget.h>
+#include <iplineedit.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -68,7 +69,7 @@ public:
     QHBoxLayout *horizontalLayout_6;
     QFormLayout *formLayout;
     QLabel *label_3;
-    QLineEdit *lineEditHostAddr;
+    IPLineEdit *lineEditHostAddr;
     QLabel *label_4;
     QLineEdit *lineEditHostMsgPort;
     QLabel *label_5;
@@ -299,7 +300,7 @@ public:
 
         formLayout->setWidget(0, QFormLayout::LabelRole, label_3);
 
-        lineEditHostAddr = new QLineEdit(groupBox);
+        lineEditHostAddr = new IPLineEdit(groupBox);
         lineEditHostAddr->setObjectName("lineEditHostAddr");
 
         formLayout->setWidget(0, QFormLayout::FieldRole, lineEditHostAddr);
@@ -363,7 +364,7 @@ public:
 
         retranslateUi(LoginWidget);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(LoginWidget);
@@ -394,7 +395,7 @@ public:
         btnWinClose_2->setText(QString());
         groupBox->setTitle(QCoreApplication::translate("LoginWidget", "\346\234\215\345\212\241\345\231\250\350\256\276\347\275\256", nullptr));
         label_3->setText(QCoreApplication::translate("LoginWidget", "\346\234\215\345\212\241\345\231\250\345\234\260\345\235\200\351\205\215\347\275\256\357\274\232", nullptr));
-        lineEditHostAddr->setText(QCoreApplication::translate("LoginWidget", "192.168.91.1", nullptr));
+        lineEditHostAddr->setText(QString());
         label_4->setText(QCoreApplication::translate("LoginWidget", "\346\266\210\346\201\257\346\234\215\345\212\241\345\231\250\347\253\257\345\217\243\357\274\232", nullptr));
         lineEditHostMsgPort->setText(QCoreApplication::translate("LoginWidget", "60100", nullptr));
         label_5->setText(QCoreApplication::translate("LoginWidget", "\346\226\207\344\273\266\346\234\215\345\212\241\345\231\250\347\253\257\345\217\243\357\274\232", nullptr));
