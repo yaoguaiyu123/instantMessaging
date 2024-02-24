@@ -1,4 +1,4 @@
-*{	font-family: "微软雅黑"; }
+/**{	font-family: "微软雅黑"; }*/
 
 /*主界面样式*/
 QWidget#MainWindow,QWidget#SystemSetting,QWidget#PictureCutDialog,CBaseDialog {
@@ -26,9 +26,16 @@ QWidget#widgetBody,QWidget#widgetBody_2,QWidget#widgetFileBoard {
     background-color: #F1F2F3;
 }
 
+QWidget#widgetWinBar{
+    background-color: #00aaff;
+}
+
+QWidget#widgetUserInfo{
+    background-color: #FFFFFF;
+}
 
 QWidget#widgetUserInfo QLabel {
-    color: #FFFFFF;
+    color: #454545;
 }
 
 QPushButton#btnWinMin,QPushButton#btnWinClose, QPushButton#btnWinMenu {
@@ -60,16 +67,16 @@ QLabel#labelWinTitle {
     color: #FFFFFF;
 }
 
-QLabel#labelUserName {
-    font: 32px;
-}
+/*QLabel#labelUserName {
+    font-size: 22px;
+}*/
 
 QLabel#labelUser {
     font: 18px;
 }
 
 QLabel#labelUserMask {
-    font: bold 12px;
+    font: bold 15px;
 }
 
 QWidget#widgetBottom {
@@ -78,12 +85,12 @@ QWidget#widgetBottom {
 }
 
 QWidget#widgetButtons {
-    background-color: #CAEEEEEE;
+    background-color: #f2f2f2;
 }
 
 QWidget#widgetMenu {
     border-top: 1px solid #FFFFFF;
-    background-color: #CAEEEEEE;
+    background-color: #5ac8ff;
 }
 
 QWidget#widgetButtons QToolButton {
@@ -118,6 +125,19 @@ QWidget#frindListWidget {
     border: none;
     background-color: #FFFFFF;
 }
+
+/*这是我新添加的*/
+QWidget#page,QWidget#page2,QWidget#page3,QWidget#page_2{
+    border: none;
+    background-color: #FFFFFF;
+}
+
+/*这是我新添加的*/
+/*QLabel#label_2,QLabel#label_4,QLabel#label_6,QLabel#label_8,
+QLabel#label,QLabel#label_3,QLabel#label_5,QLabel#label_7{
+    background-color: #5AC8FF;
+}*/
+
 /*end 主界面样式 end*/
 
 /*聊天窗口样式表设计*/

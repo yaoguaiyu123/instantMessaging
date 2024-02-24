@@ -31,7 +31,7 @@
     <enum>Qt::LeftToRight</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -254,7 +254,7 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLineEdit" name="lineEditUser">
+                <widget class="QIconLineEdit" name="lineEditUser">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -276,7 +276,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEditPasswd">
+                <widget class="QIconLineEdit" name="lineEditPasswd">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -574,6 +574,11 @@
    <class>IPLineEdit</class>
    <extends>QLineEdit</extends>
    <header location="global">iplineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QIconLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">clineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

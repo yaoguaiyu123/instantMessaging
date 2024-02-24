@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../chatClient/loginwidget.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #if __has_include(<QtCore/qtmochelpers.h>)
@@ -43,17 +44,19 @@ static constexpr auto qt_meta_stringdata_CLASSLoginWidgetENDCLASS = QtMocHelpers
     "",
     "on_btnWinMenu_clicked",
     "on_btnCancel_clicked",
-    "on_btnWinClose_2_clicked"
+    "on_btnWinClose_2_clicked",
+    "on_btnLogin_clicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSLoginWidgetENDCLASS_t {
-    uint offsetsAndSizes[12];
+    uint offsetsAndSizes[14];
     char stringdata0[12];
     char stringdata1[23];
     char stringdata2[1];
     char stringdata3[22];
     char stringdata4[21];
     char stringdata5[25];
+    char stringdata6[20];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSLoginWidgetENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -64,14 +67,16 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSLoginWidgetENDCLASS_t qt_meta_s
         QT_MOC_LITERAL(35, 0),  // ""
         QT_MOC_LITERAL(36, 21),  // "on_btnWinMenu_clicked"
         QT_MOC_LITERAL(58, 20),  // "on_btnCancel_clicked"
-        QT_MOC_LITERAL(79, 24)   // "on_btnWinClose_2_clicked"
+        QT_MOC_LITERAL(79, 24),  // "on_btnWinClose_2_clicked"
+        QT_MOC_LITERAL(104, 19)   // "on_btnLogin_clicked"
     },
     "LoginWidget",
     "on_btnWinClose_clicked",
     "",
     "on_btnWinMenu_clicked",
     "on_btnCancel_clicked",
-    "on_btnWinClose_2_clicked"
+    "on_btnWinClose_2_clicked",
+    "on_btnLogin_clicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -83,7 +88,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSLoginWidgetENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -91,12 +96,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSLoginWidgetENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   38,    2, 0x08,    1 /* Private */,
-       3,    0,   39,    2, 0x08,    2 /* Private */,
-       4,    0,   40,    2, 0x08,    3 /* Private */,
-       5,    0,   41,    2, 0x08,    4 /* Private */,
+       1,    0,   44,    2, 0x08,    1 /* Private */,
+       3,    0,   45,    2, 0x08,    2 /* Private */,
+       4,    0,   46,    2, 0x08,    3 /* Private */,
+       5,    0,   47,    2, 0x08,    4 /* Private */,
+       6,    0,   48,    2, 0x08,    5 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -106,7 +113,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSLoginWidgetENDCLASS[] = {
 };
 
 Q_CONSTINIT const QMetaObject LoginWidget::staticMetaObject = { {
-    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
+    QMetaObject::SuperData::link<CustomMoveWidget::staticMetaObject>(),
     qt_meta_stringdata_CLASSLoginWidgetENDCLASS.offsetsAndSizes,
     qt_meta_data_CLASSLoginWidgetENDCLASS,
     qt_static_metacall,
@@ -121,6 +128,8 @@ Q_CONSTINIT const QMetaObject LoginWidget::staticMetaObject = { {
         // method 'on_btnCancel_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_btnWinClose_2_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btnLogin_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -136,6 +145,7 @@ void LoginWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 1: _t->on_btnWinMenu_clicked(); break;
         case 2: _t->on_btnCancel_clicked(); break;
         case 3: _t->on_btnWinClose_2_clicked(); break;
+        case 4: _t->on_btnLogin_clicked(); break;
         default: ;
         }
     }
@@ -152,22 +162,22 @@ void *LoginWidget::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CLASSLoginWidgetENDCLASS.stringdata0))
         return static_cast<void*>(this);
-    return QWidget::qt_metacast(_clname);
+    return CustomMoveWidget::qt_metacast(_clname);
 }
 
 int LoginWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = CustomMoveWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

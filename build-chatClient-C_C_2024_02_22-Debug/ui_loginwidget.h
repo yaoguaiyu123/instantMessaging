@@ -23,6 +23,7 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <animationstackwidget.h>
+#include <clineedit.h>
 #include <iplineedit.h>
 
 QT_BEGIN_NAMESPACE
@@ -48,8 +49,8 @@ public:
     QLabel *labelUserHead;
     QWidget *widgetInput;
     QVBoxLayout *verticalLayout_3;
-    QLineEdit *lineEditUser;
-    QLineEdit *lineEditPasswd;
+    QIconLineEdit *lineEditUser;
+    QIconLineEdit *lineEditPasswd;
     QHBoxLayout *horizontalLayout;
     QCheckBox *checkBoxPasswd;
     QCheckBox *checkBoxAutoLogin;
@@ -186,14 +187,14 @@ public:
         verticalLayout_3 = new QVBoxLayout(widgetInput);
         verticalLayout_3->setObjectName("verticalLayout_3");
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        lineEditUser = new QLineEdit(widgetInput);
+        lineEditUser = new QIconLineEdit(widgetInput);
         lineEditUser->setObjectName("lineEditUser");
         lineEditUser->setMinimumSize(QSize(0, 25));
         lineEditUser->setMaximumSize(QSize(16777215, 25));
 
         verticalLayout_3->addWidget(lineEditUser);
 
-        lineEditPasswd = new QLineEdit(widgetInput);
+        lineEditPasswd = new QIconLineEdit(widgetInput);
         lineEditPasswd->setObjectName("lineEditPasswd");
         lineEditPasswd->setMinimumSize(QSize(0, 25));
         lineEditPasswd->setMaximumSize(QSize(16777215, 25));
@@ -364,7 +365,7 @@ public:
 
         retranslateUi(LoginWidget);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(LoginWidget);
