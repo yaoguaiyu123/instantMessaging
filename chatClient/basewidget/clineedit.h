@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <QEvent>
 
-//理解为一个外部库
+//这里可以看成是一个外部的依赖
 
 class QLabel;
 

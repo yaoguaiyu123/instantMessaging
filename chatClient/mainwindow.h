@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+//主界面类
 #include <QMainWindow>
 #include "customwidget.h"
 

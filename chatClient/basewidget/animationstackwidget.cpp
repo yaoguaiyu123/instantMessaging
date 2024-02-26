@@ -32,7 +32,6 @@ void AnimationStackWidget::animation(int pageIndex)
     QObject::connect(ani, &QPropertyAnimation::valueChanged, this, &AnimationStackWidget::onValueChanged);
     QObject::connect(ani, &QPropertyAnimation::finished, this, &AnimationStackWidget::onFinished);
     currentWidget()->hide();
-
     m_isAnimation = true;
     ani->start();
 }

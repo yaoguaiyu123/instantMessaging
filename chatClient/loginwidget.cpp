@@ -2,6 +2,10 @@
 #include "ui_loginwidget.h"
 #include "mainwindow.h"
 #include <QFile>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include "clientsocket.h"
+#include <QDebug>
 
 LoginWidget::LoginWidget(QWidget *parent) :
     CustomMoveWidget(parent),
@@ -24,6 +28,16 @@ LoginWidget::LoginWidget(QWidget *parent) :
     //给lineEditUser添加图片
     ui->lineEditUser->SetIcon(QPixmap(":/resource/common/ic_user.png"));
     ui->lineEditPasswd->SetIcon(QPixmap(":/resource/common/ic_lock.png"));
+
+    //创建连接
+    m_tcpSocket = new ClientSocket();
+
+    connect(m_tcpSocket, &ClientSocket::signalStatus, this, &LoginWidget::on_signalStatus);
+    connect(m_tcpSocket, &ClientSocket::signalMessage, this, &LoginWidget::on_signalMessage);
+
+    m_tcpSocket->CheckConnected(); // 如果没有连接就连接默认ip和端口,连接服务器
+
+
 }
 
 LoginWidget::~LoginWidget()
@@ -62,11 +76,45 @@ void LoginWidget::on_btnWinClose_2_clicked()
 // 登录按钮
 void LoginWidget::on_btnLogin_clicked()
 {
-    MainWindow *mainwindow = new MainWindow;
-    mainwindow->show();
-    this->hide();
+    QString username = ui->lineEditUser->text();
+    QString password = ui->lineEditPasswd->text();
+    QJsonObject json;
+    json.insert("name", username);
+    json.insert("passwd", password);
+
+    m_tcpSocket->SltSendMessage(17, json);
+
 }
 
+void LoginWidget::on_signalMessage(const quint8& type, const QJsonValue& datacal)
+{
+}
+
+void LoginWidget::on_signalStatus(const quint8& state)
+{
+    switch (state) {
+    case 0x01:
+        // 连接成功
+        ui->labelWinTitle->setText("已连接服务器~");
+        break;
+    case 0x03:
+    {
+        // 登录成功
+        MainWindow* mainwindow = new MainWindow;
+        mainwindow->show();
+        this->hide();
+    }
+        break;
+    case 0x13:
+        //用户已经在线
+        break;
+    case 0x04:
+        //用户未注册
+        break;
+    default:
+        break;
+    }
+}
 
 
 

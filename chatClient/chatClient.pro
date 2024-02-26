@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     loginwidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    clientsocket.cpp \
 
 HEADERS += \
     loginwidget.h \
-    mainwindow.h
+    mainwindow.h \
+    clientsocket.h \
 
 FORMS += \
     loginwidget.ui \

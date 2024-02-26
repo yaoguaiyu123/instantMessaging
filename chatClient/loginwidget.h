@@ -5,6 +5,7 @@
 //用到了Qt动画,实现登录页面的stackWidget的翻转动画
 #include <QWidget>
 #include "customwidget.h"
+class ClientSocket;
 
 namespace Ui {
 class LoginWidget;
@@ -26,8 +27,12 @@ private slots:
 
     void on_btnLogin_clicked();
 
+    void on_signalMessage(const quint8& type, const QJsonValue& datacal);
+    void on_signalStatus(const quint8& state);
+
 private:
     Ui::LoginWidget *ui;
+    ClientSocket* m_tcpSocket;
 };
 
 #endif // LOGINWIDGET_H
