@@ -32,3 +32,4 @@ RESOURCES += \
     resource.qrc
 
 include ($$PWD/basewidget/basewidget.pri)
+include ($$PWD/commonapi/commonapi.pri)

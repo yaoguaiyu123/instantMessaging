@@ -13,8 +13,16 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QStackedWidget" name="GCStackedWidget">
+  <widget class="QWidget" name="centralWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>337</width>
+     <height>682</height>
+    </rect>
+   </property>
+   <widget class="ChatStackedWidget" name="GCStackedWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -27,7 +35,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page2">
      <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -963,6 +971,14 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ChatStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">chatstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resource.qrc"/>
  </resources>

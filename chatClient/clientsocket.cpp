@@ -9,12 +9,15 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QByteArray>
+#include "unit.h"
+#include "myapp.h"
 
 //默认的ip地址和端口
 //#define SERVER_IP "192.168.2.199"
 //#define SERVER_IP "106.85.77.102"
-#define SERVER_IP "127.0.0.1"
-#define SERVER_PORT 60100   //消息服务器的端口号
+//#define SERVER_IP "127.0.0.1"
+//#define SERVER_PORT 60100   //消息服务器的端口号
+//这里不再需要，而是使用myapp.h中的定义
 
 ClientSocket::ClientSocket(QObject *parent) :
     QObject(parent)
@@ -47,7 +50,7 @@ void ClientSocket::CheckConnected()
 {
     if (m_tcpSocket->state() != QTcpSocket::ConnectedState)
     {
-        m_tcpSocket->connectToHost(QString(SERVER_IP), SERVER_PORT);
+        m_tcpSocket->connectToHost(QString(MyApp::m_strHostAddr), MyApp::m_nMsgPort);
     }
 }
 
@@ -83,7 +86,7 @@ void ClientSocket::SltSendMessage(const quint8 &type, const QJsonValue &dataVal)
 {
     // 连接服务器
     if (!m_tcpSocket->isOpen()) {
-        m_tcpSocket->connectToHost(QString(SERVER_IP), SERVER_PORT);
+        m_tcpSocket->connectToHost(QString(MyApp::m_strHostAddr), MyApp::m_nMsgPort);
         m_tcpSocket->waitForConnected(1000);
     }
     // 超时1s后还是连接不上，直接返回
@@ -135,10 +138,10 @@ void ClientSocket::SltReadyRead()
             int nFrom = jsonobj.value("from").toInt();
             int nType = jsonobj.value("type").toInt();
             switch (nType) {
-            case 0x10:
+            case Register:
                 // 注册
                 break;
-            case 0x11:
+            case Login:
                 // 登录
                 ParseLogin(dataval);
                 break;
@@ -160,14 +163,14 @@ void ClientSocket::ParseLogin(QJsonValue dataval)
         // 登录成功
         qDebug() << "登录成功,id = " << id;
         m_nId = id;
-        emit signalStatus(0x03);
+        emit signalStatus(LoginSuccess);
     } else {
         if (code == -2) {
             qDebug() << "登录失败,用户已在线";
-            emit signalStatus(0x13);
+            emit signalStatus(LoginRepeat);
         }else if(code == -1){
-            qDebug() << "登录失败,未找到用户";
-            emit signalStatus(0x04);
+            qDebug() << "登录失败,用户名或密码错误";
+            emit signalStatus(LoginPasswdError);
         }
     }
 }

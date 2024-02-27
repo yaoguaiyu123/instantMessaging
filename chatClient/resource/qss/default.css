@@ -112,8 +112,9 @@ QWidget#widgetButtons QToolButton:hover {
 }
 
 QWidget#widgetButtons QToolButton:checked {
-    border-top: 2px solid #2254D8;
-    background-color: #7AFFFFFF;
+/*    border-top: 2px solid #22aaff;*/
+    background-color: #5ac8ff;
+    color:white;
 }
 
 .QQListWidget {
@@ -127,7 +128,7 @@ QWidget#frindListWidget {
 }
 
 /*这是我新添加的*/
-QWidget#page,QWidget#page2,QWidget#page3,QWidget#page_2{
+QWidget#convationListWidget,QWidget#frindListWidget,QWidget#groupListWidget,QWidget#widget_5{
     border: none;
     background-color: #FFFFFF;
 }

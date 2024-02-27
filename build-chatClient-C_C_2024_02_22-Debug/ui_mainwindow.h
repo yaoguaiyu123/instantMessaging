@@ -16,10 +16,10 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <chatstackedwidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -27,7 +27,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QStackedWidget *GCStackedWidget;
+    ChatStackedWidget *GCStackedWidget;
     QWidget *page2;
     QVBoxLayout *verticalLayout_4;
     QWidget *widgetFrindT;
@@ -104,7 +104,8 @@ public:
         MainWindow->resize(338, 680);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName("centralWidget");
-        GCStackedWidget = new QStackedWidget(centralWidget);
+        centralWidget->setGeometry(QRect(0, 0, 337, 682));
+        GCStackedWidget = new ChatStackedWidget(centralWidget);
         GCStackedWidget->setObjectName("GCStackedWidget");
         GCStackedWidget->setGeometry(QRect(0, 172, 337, 398));
         GCStackedWidget->setStyleSheet(QString::fromUtf8(""));
@@ -544,7 +545,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        GCStackedWidget->setCurrentIndex(2);
+        GCStackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

@@ -4,13 +4,17 @@
 #include "mainwindow.h"
 #include "loginwidget.h"
 #include <QApplication>
+#include "global.h"
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 //    MainWindow w;
 //    w.show();
+    qDebug() << myHelper::GetIP();
     LoginWidget l;
+    myHelper::FormInCenter(&l);  //设置窗体居中
     l.show();
     return a.exec();
 }

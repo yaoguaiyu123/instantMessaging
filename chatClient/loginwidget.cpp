@@ -6,18 +6,18 @@
 #include <QJsonDocument>
 #include "clientsocket.h"
 #include <QDebug>
+#include "unit.h"
+#include "global.h"
+
 
 LoginWidget::LoginWidget(QWidget *parent) :
     CustomMoveWidget(parent),
     ui(new Ui::LoginWidget)
 {
     ui->setupUi(this);
-    // 加载样式表(qss文件)
-    QFile file(":/qss/resource/qss/default.css");
-    file.open(QIODevice::ReadOnly);
-    //这里的qApp指的是整个应用
-    qApp->setStyleSheet(file.readAll());
-    file.close();
+
+    myHelper::setStyle("default");   //设置qss样式的函数
+
     //去掉Qt自带的标题栏
     this->setWindowFlags(Qt::FramelessWindowHint);
     //使透明生效
@@ -97,7 +97,7 @@ void LoginWidget::on_signalStatus(const quint8& state)
         // 连接成功
         ui->labelWinTitle->setText("已连接服务器~");
         break;
-    case 0x03:
+    case LoginSuccess:
     {
         // 登录成功
         MainWindow* mainwindow = new MainWindow;
@@ -105,10 +105,10 @@ void LoginWidget::on_signalStatus(const quint8& state)
         this->hide();
     }
         break;
-    case 0x13:
+    case LoginRepeat:
         //用户已经在线
         break;
-    case 0x04:
+    case LoginPasswdError:
         //用户未注册
         break;
     default:

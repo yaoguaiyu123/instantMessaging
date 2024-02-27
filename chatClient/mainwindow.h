@@ -4,6 +4,7 @@
 //主界面类
 #include <QMainWindow>
 #include "customwidget.h"
+#include <QButtonGroup>
 
 
 QT_BEGIN_NAMESPACE
@@ -20,8 +21,9 @@ public:
 
 private slots:
     void on_btnWinClose_clicked();
-
+    void SltMainPageChanged(int index);
 private:
     Ui::MainWindow *ui;
+    QButtonGroup* m_buttonGroup;
 };
 #endif // MAINWINDOW_H
