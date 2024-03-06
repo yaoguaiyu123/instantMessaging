@@ -4,7 +4,8 @@
 #include <QLineEdit>
 #include <QEvent>
 
-//这里可以看成是一个外部的依赖
+///这里可以看成是一个外部的依赖
+///我把除了QIconLineEdit之外的都注释掉了
 
 class QLabel;
 
@@ -27,7 +28,6 @@ class QLabel;
 //	QLineEdit *m_lineEidt[4];
 //};
 
-/////////////////////////////////////////////
 //class QMacLineEdit : public QLineEdit
 //{
 //    Q_OBJECT
@@ -48,10 +48,7 @@ class QLabel;
 //    QLineEdit *m_lineEidt[6];
 //};
 
-///////////////////////////////////////////////////////////
-/// \brief QIconLineEdit::QIconLineEdit
-/// \param parent
-/// 带图片的linedit
+//带图片的LineEdit
 class QIconLineEdit : public QLineEdit {
     Q_OBJECT
 public:

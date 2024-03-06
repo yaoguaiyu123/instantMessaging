@@ -86,8 +86,24 @@ void LoginWidget::on_btnLogin_clicked()
 
 }
 
-void LoginWidget::on_signalMessage(const quint8& type, const QJsonValue& datacal)
+void LoginWidget::on_signalMessage(const quint8& state, const QJsonValue& dataval)
 {
+    switch (state) {
+    case LoginSuccess:
+    {
+        // 登录成功
+        disconnect(m_tcpSocket, &ClientSocket::signalStatus, this, &LoginWidget::on_signalStatus);
+        disconnect(m_tcpSocket, &ClientSocket::signalMessage, this, &LoginWidget::on_signalMessage);
+        MainWindow* mainwindow = new MainWindow(dataval);
+        mainwindow->setScoket(m_tcpSocket,ui->lineEditUser->text());
+        mainwindow->show();
+        this->hide();
+    }
+    break;
+        break;
+    default:
+        break;
+    }
 }
 
 void LoginWidget::on_signalStatus(const quint8& state)
@@ -96,14 +112,6 @@ void LoginWidget::on_signalStatus(const quint8& state)
     case 0x01:
         // 连接成功
         ui->labelWinTitle->setText("已连接服务器~");
-        break;
-    case LoginSuccess:
-    {
-        // 登录成功
-        MainWindow* mainwindow = new MainWindow;
-        mainwindow->show();
-        this->hide();
-    }
         break;
     case LoginRepeat:
         //用户已经在线

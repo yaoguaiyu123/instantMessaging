@@ -56,7 +56,7 @@ void ClientSocket::CheckConnected()
 
 
 //断开连接
-void ClientSocket::ColseConnected()
+void ClientSocket::CloseConnected()
 {
     if (m_tcpSocket->isOpen()) {
         m_tcpSocket->abort();
@@ -145,6 +145,12 @@ void ClientSocket::SltReadyRead()
                 // 登录
                 ParseLogin(dataval);
                 break;
+            case AddFriend:
+                emit signalMessage(AddFriend,dataval);
+                break;
+            case AddFriendRequist:
+                emit signalMessage(AddFriendRequist,dataval);
+                break;
             }
 
         }
@@ -163,7 +169,7 @@ void ClientSocket::ParseLogin(QJsonValue dataval)
         // 登录成功
         qDebug() << "登录成功,id = " << id;
         m_nId = id;
-        emit signalStatus(LoginSuccess);
+        emit signalMessage(LoginSuccess,dataval);
     } else {
         if (code == -2) {
             qDebug() << "登录失败,用户已在线";

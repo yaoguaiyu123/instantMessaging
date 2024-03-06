@@ -3,6 +3,7 @@
 
 #include <QStackedWidget>
 //自定义的堆栈窗口
+//添加了动画效果(翻转的动画)
 
 class AnimationStackWidget : public QStackedWidget
 {

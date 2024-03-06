@@ -21,6 +21,7 @@
 //#include <QStyleOption>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QDebug>
 
 
 
@@ -419,6 +420,7 @@ CInputDialog::CInputDialog(QWidget *parent) :
     connect(btnCancel, SIGNAL(clicked(bool)), this, SLOT(reject()));
     connect(btnOk, SIGNAL(clicked(bool)), this, SLOT(accept()));
     connect(lineEditInput, SIGNAL(returnPressed()), this, SLOT(accept()));
+
 }
 
 CInputDialog::~CInputDialog()
@@ -438,7 +440,9 @@ CInputDialog::~CInputDialog()
 QString CInputDialog::GetInputText(QWidget *parent, const QString &text,
                                 const QString &title, QLineEdit::EchoMode mode)
 {
-    CInputDialog dlg(parent);
+//    qDebug("准备创建输入窗口");
+    CInputDialog dlg;     ///不需要传入参数，传入参数之后无法显示
+    dlg.show();  //显示这个窗口
     dlg.SetInputText(text);
     dlg.SetWinTitle(title);
     dlg.SetEchoMode(mode);

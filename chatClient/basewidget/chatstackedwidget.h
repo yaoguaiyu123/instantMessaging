@@ -6,7 +6,7 @@
 #include <QPropertyAnimation>
 
 //自定义的堆栈窗口
-//添加了动画效果
+//添加了动画效果(左右滑动的动画)
 
 class ChatStackedWidget : public QStackedWidget
 {
@@ -14,10 +14,10 @@ class ChatStackedWidget : public QStackedWidget
 public:
     enum AnimationType
     {
-        TopToBottom,    ///Animation from top to bottom
-        BottomToTop,    ///Animation from bottom to top
-        LeftToRight,    ///Animation from left to right
-        RightToLeft     ///Animation from right to left
+        TopToBottom,    //Animation from top to bottom
+        BottomToTop,    //Animation from bottom to top
+        LeftToRight,    //Animation from left to right
+        RightToLeft     //Animation from right to left
     };
 
     explicit ChatStackedWidget(QWidget *parent = 0);

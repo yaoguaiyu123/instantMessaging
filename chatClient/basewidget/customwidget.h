@@ -8,7 +8,7 @@
 
 #include <QLineEdit>
 
-//这里可以看成是一个外部的依赖
+//自定义的可移动窗口
 
 QT_BEGIN_NAMESPACE
 class QPushButton;
@@ -70,7 +70,7 @@ protected:
 };
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief The CBaseDialog class
+/// \brief The CBaseDialog class  基础对话框
 ///
 class CBaseDialog : public CustomDialog {
     Q_OBJECT
@@ -137,7 +137,7 @@ public slots:
 };
 
 
-// -------------------弹出输入框类 --------------------------//
+///弹出输入框
 class CInputDialog : public CBaseDialog
 {
     Q_OBJECT

@@ -20,6 +20,7 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <chatstackedwidget.h>
+#include <qqlist/qqlistwidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -34,28 +35,28 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_3;
     QLabel *label_4;
-    QWidget *frindListWidget;
+    QQListWidget *frindListWidget;
     QWidget *page3;
     QVBoxLayout *verticalLayout_3;
     QWidget *widgetGroupT;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_5;
     QLabel *label_6;
-    QWidget *groupListWidget;
+    QQListWidget *groupListWidget;
     QWidget *page;
     QVBoxLayout *verticalLayout_10;
     QWidget *widgetConVT;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label;
     QLabel *label_2;
-    QWidget *convationListWidget;
+    QQListWidget *convationListWidget;
     QWidget *page_2;
     QVBoxLayout *verticalLayout_6;
     QWidget *widgetApply;
     QHBoxLayout *horizontalLayout_6;
     QLabel *label_7;
     QLabel *label_8;
-    QWidget *widget_5;
+    QQListWidget *widget_5;
     QWidget *widgetUserInfo;
     QVBoxLayout *verticalLayout_9;
     QWidget *widgetWinBar;
@@ -142,7 +143,7 @@ public:
 
         verticalLayout_4->addWidget(widgetFrindT);
 
-        frindListWidget = new QWidget(page2);
+        frindListWidget = new QQListWidget(page2);
         frindListWidget->setObjectName("frindListWidget");
 
         verticalLayout_4->addWidget(frindListWidget);
@@ -181,7 +182,7 @@ public:
 
         verticalLayout_3->addWidget(widgetGroupT);
 
-        groupListWidget = new QWidget(page3);
+        groupListWidget = new QQListWidget(page3);
         groupListWidget->setObjectName("groupListWidget");
 
         verticalLayout_3->addWidget(groupListWidget);
@@ -220,7 +221,7 @@ public:
 
         verticalLayout_10->addWidget(widgetConVT);
 
-        convationListWidget = new QWidget(page);
+        convationListWidget = new QQListWidget(page);
         convationListWidget->setObjectName("convationListWidget");
 
         verticalLayout_10->addWidget(convationListWidget);
@@ -260,7 +261,7 @@ public:
 
         verticalLayout_6->addWidget(widgetApply);
 
-        widget_5 = new QWidget(page_2);
+        widget_5 = new QQListWidget(page_2);
         widget_5->setObjectName("widget_5");
 
         verticalLayout_6->addWidget(widget_5);
@@ -545,7 +546,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        GCStackedWidget->setCurrentIndex(3);
+        GCStackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

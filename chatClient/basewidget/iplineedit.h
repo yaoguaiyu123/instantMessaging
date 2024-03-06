@@ -5,6 +5,8 @@
 #include <QObject>
 #define IP_INPUT_SIZE 4
 
+//自定义的IPLineEdit
+
 class IPLineEdit : public QLineEdit
 {
     Q_OBJECT
