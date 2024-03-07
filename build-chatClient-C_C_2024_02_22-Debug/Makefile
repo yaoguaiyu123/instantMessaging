@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -D_REENTRANT $(DEFINES)
-INCPATH       = -I../chatClient -I. -I../chatClient/basewidget -I../chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I. -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../chatClient -I. -I../chatClient/basewidget -I../chatClient/commonapi -I../chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I. -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++
 QMAKE         = /opt/Qt/6.5.3/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -66,8 +66,11 @@ SOURCES       = ../chatClient/loginwidget.cpp \
 		../chatClient/basewidget/qqlist/qqlistviewgroup.cpp \
 		../chatClient/basewidget/qqlist/qqlistwidget.cpp \
 		../chatClient/basewidget/qqlist/qqpopmenuwidget.cpp \
+		../chatClient/basewidget/chatbubble.cpp \
 		../chatClient/commonapi/myapp.cpp \
-		../chatClient/commonapi/qqcell.cpp qrc_resource.cpp \
+		../chatClient/commonapi/qqcell.cpp \
+		../chatClient/commonapi/iteminfo.cpp \
+		../chatClient/uipage/chatwindow.cpp qrc_resource.cpp \
 		moc_loginwidget.cpp \
 		moc_mainwindow.cpp \
 		moc_clientsocket.cpp \
@@ -80,7 +83,9 @@ SOURCES       = ../chatClient/loginwidget.cpp \
 		moc_qqlistviewchild.cpp \
 		moc_qqlistviewgroup.cpp \
 		moc_qqlistwidget.cpp \
-		moc_qqpopmenuwidget.cpp
+		moc_qqpopmenuwidget.cpp \
+		moc_chatbubble.cpp \
+		moc_chatwindow.cpp
 OBJECTS       = loginwidget.o \
 		main.o \
 		mainwindow.o \
@@ -95,8 +100,11 @@ OBJECTS       = loginwidget.o \
 		qqlistviewgroup.o \
 		qqlistwidget.o \
 		qqpopmenuwidget.o \
+		chatbubble.o \
 		myapp.o \
 		qqcell.o \
+		iteminfo.o \
+		chatwindow.o \
 		qrc_resource.o \
 		moc_loginwidget.o \
 		moc_mainwindow.o \
@@ -110,7 +118,9 @@ OBJECTS       = loginwidget.o \
 		moc_qqlistviewchild.o \
 		moc_qqlistviewgroup.o \
 		moc_qqlistwidget.o \
-		moc_qqpopmenuwidget.o
+		moc_qqpopmenuwidget.o \
+		moc_chatbubble.o \
+		moc_chatwindow.o
 DIST          = /opt/Qt/6.5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/common/linux.conf \
@@ -392,6 +402,7 @@ DIST          = /opt/Qt/6.5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/default_pre.prf \
 		../chatClient/basewidget/basewidget.pri \
 		../chatClient/commonapi/commonapi.pri \
+		../chatClient/uipage/uipage.pri \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/resolve_config.prf \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/default_post.prf \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/qml_debug.prf \
@@ -422,10 +433,13 @@ DIST          = /opt/Qt/6.5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		../chatClient/basewidget/qqlist/qqlistviewgroup.h \
 		../chatClient/basewidget/qqlist/qqlistwidget.h \
 		../chatClient/basewidget/qqlist/qqpopmenuwidget.h \
+		../chatClient/basewidget/chatbubble.h \
 		../chatClient/commonapi/global.h \
 		../chatClient/commonapi/myapp.h \
 		../chatClient/commonapi/qqcell.h \
-		../chatClient/commonapi/unit.h ../chatClient/loginwidget.cpp \
+		../chatClient/commonapi/unit.h \
+		../chatClient/commonapi/iteminfo.h \
+		../chatClient/uipage/chatwindow.h ../chatClient/loginwidget.cpp \
 		../chatClient/main.cpp \
 		../chatClient/mainwindow.cpp \
 		../chatClient/clientsocket.cpp \
@@ -439,8 +453,11 @@ DIST          = /opt/Qt/6.5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		../chatClient/basewidget/qqlist/qqlistviewgroup.cpp \
 		../chatClient/basewidget/qqlist/qqlistwidget.cpp \
 		../chatClient/basewidget/qqlist/qqpopmenuwidget.cpp \
+		../chatClient/basewidget/chatbubble.cpp \
 		../chatClient/commonapi/myapp.cpp \
-		../chatClient/commonapi/qqcell.cpp
+		../chatClient/commonapi/qqcell.cpp \
+		../chatClient/commonapi/iteminfo.cpp \
+		../chatClient/uipage/chatwindow.cpp
 QMAKE_TARGET  = chatClient
 DESTDIR       = 
 TARGET        = chatClient
@@ -449,7 +466,7 @@ TARGET        = chatClient
 first: all
 ####### Build rules
 
-chatClient: ui_loginwidget.h ui_mainwindow.h ui_qqlistviewgroup.h $(OBJECTS)  
+chatClient: ui_loginwidget.h ui_mainwindow.h ui_qqlistviewgroup.h ui_chatwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET)  $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../chatClient/chatClient.pro /opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++/qmake.conf /opt/Qt/6.5.3/gcc_64/mkspecs/features/spec_pre.prf \
@@ -733,6 +750,7 @@ Makefile: ../chatClient/chatClient.pro /opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++/qm
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/default_pre.prf \
 		../chatClient/basewidget/basewidget.pri \
 		../chatClient/commonapi/commonapi.pri \
+		../chatClient/uipage/uipage.pri \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/resolve_config.prf \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/default_post.prf \
 		/opt/Qt/6.5.3/gcc_64/mkspecs/features/qml_debug.prf \
@@ -1039,6 +1057,7 @@ Makefile: ../chatClient/chatClient.pro /opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++/qm
 /opt/Qt/6.5.3/gcc_64/mkspecs/features/default_pre.prf:
 ../chatClient/basewidget/basewidget.pri:
 ../chatClient/commonapi/commonapi.pri:
+../chatClient/uipage/uipage.pri:
 /opt/Qt/6.5.3/gcc_64/mkspecs/features/resolve_config.prf:
 /opt/Qt/6.5.3/gcc_64/mkspecs/features/default_post.prf:
 /opt/Qt/6.5.3/gcc_64/mkspecs/features/qml_debug.prf:
@@ -1079,9 +1098,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../chatClient/resource.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/6.5.3/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../chatClient/loginwidget.h ../chatClient/mainwindow.h ../chatClient/clientsocket.h ../chatClient/databasemagr.h ../chatClient/basewidget/animationstackwidget.h ../chatClient/basewidget/iplineedit.h ../chatClient/basewidget/customwidget.h ../chatClient/basewidget/clineedit.h ../chatClient/basewidget/chatstackedwidget.h ../chatClient/basewidget/qqlist/qqlistviewchild.h ../chatClient/basewidget/qqlist/qqlistviewgroup.h ../chatClient/basewidget/qqlist/qqlistwidget.h ../chatClient/basewidget/qqlist/qqpopmenuwidget.h ../chatClient/commonapi/global.h ../chatClient/commonapi/myapp.h ../chatClient/commonapi/qqcell.h ../chatClient/commonapi/unit.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../chatClient/loginwidget.cpp ../chatClient/main.cpp ../chatClient/mainwindow.cpp ../chatClient/clientsocket.cpp ../chatClient/databasemagr.cpp ../chatClient/basewidget/animationstackwidget.cpp ../chatClient/basewidget/iplineedit.cpp ../chatClient/basewidget/customwidget.cpp ../chatClient/basewidget/clineedit.cpp ../chatClient/basewidget/chatstackedwidget.cpp ../chatClient/basewidget/qqlist/qqlistviewchild.cpp ../chatClient/basewidget/qqlist/qqlistviewgroup.cpp ../chatClient/basewidget/qqlist/qqlistwidget.cpp ../chatClient/basewidget/qqlist/qqpopmenuwidget.cpp ../chatClient/commonapi/myapp.cpp ../chatClient/commonapi/qqcell.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../chatClient/loginwidget.ui ../chatClient/mainwindow.ui ../chatClient/basewidget/qqlist/qqlistviewgroup.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../chatClient/loginwidget.h ../chatClient/mainwindow.h ../chatClient/clientsocket.h ../chatClient/databasemagr.h ../chatClient/basewidget/animationstackwidget.h ../chatClient/basewidget/iplineedit.h ../chatClient/basewidget/customwidget.h ../chatClient/basewidget/clineedit.h ../chatClient/basewidget/chatstackedwidget.h ../chatClient/basewidget/qqlist/qqlistviewchild.h ../chatClient/basewidget/qqlist/qqlistviewgroup.h ../chatClient/basewidget/qqlist/qqlistwidget.h ../chatClient/basewidget/qqlist/qqpopmenuwidget.h ../chatClient/basewidget/chatbubble.h ../chatClient/commonapi/global.h ../chatClient/commonapi/myapp.h ../chatClient/commonapi/qqcell.h ../chatClient/commonapi/unit.h ../chatClient/commonapi/iteminfo.h ../chatClient/uipage/chatwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../chatClient/loginwidget.cpp ../chatClient/main.cpp ../chatClient/mainwindow.cpp ../chatClient/clientsocket.cpp ../chatClient/databasemagr.cpp ../chatClient/basewidget/animationstackwidget.cpp ../chatClient/basewidget/iplineedit.cpp ../chatClient/basewidget/customwidget.cpp ../chatClient/basewidget/clineedit.cpp ../chatClient/basewidget/chatstackedwidget.cpp ../chatClient/basewidget/qqlist/qqlistviewchild.cpp ../chatClient/basewidget/qqlist/qqlistviewgroup.cpp ../chatClient/basewidget/qqlist/qqlistwidget.cpp ../chatClient/basewidget/qqlist/qqpopmenuwidget.cpp ../chatClient/basewidget/chatbubble.cpp ../chatClient/commonapi/myapp.cpp ../chatClient/commonapi/qqcell.cpp ../chatClient/commonapi/iteminfo.cpp ../chatClient/uipage/chatwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../chatClient/loginwidget.ui ../chatClient/mainwindow.ui ../chatClient/basewidget/qqlist/qqlistviewgroup.ui ../chatClient/uipage/chatwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1189,9 +1208,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/Qt/6.5.3/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /opt/Qt/6.5.3/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_loginwidget.cpp moc_mainwindow.cpp moc_clientsocket.cpp moc_databasemagr.cpp moc_animationstackwidget.cpp moc_iplineedit.cpp moc_customwidget.cpp moc_clineedit.cpp moc_chatstackedwidget.cpp moc_qqlistviewchild.cpp moc_qqlistviewgroup.cpp moc_qqlistwidget.cpp moc_qqpopmenuwidget.cpp
+compiler_moc_header_make_all: moc_loginwidget.cpp moc_mainwindow.cpp moc_clientsocket.cpp moc_databasemagr.cpp moc_animationstackwidget.cpp moc_iplineedit.cpp moc_customwidget.cpp moc_clineedit.cpp moc_chatstackedwidget.cpp moc_qqlistviewchild.cpp moc_qqlistviewgroup.cpp moc_qqlistwidget.cpp moc_qqpopmenuwidget.cpp moc_chatbubble.cpp moc_chatwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_loginwidget.cpp moc_mainwindow.cpp moc_clientsocket.cpp moc_databasemagr.cpp moc_animationstackwidget.cpp moc_iplineedit.cpp moc_customwidget.cpp moc_clineedit.cpp moc_chatstackedwidget.cpp moc_qqlistviewchild.cpp moc_qqlistviewgroup.cpp moc_qqlistwidget.cpp moc_qqpopmenuwidget.cpp
+	-$(DEL_FILE) moc_loginwidget.cpp moc_mainwindow.cpp moc_clientsocket.cpp moc_databasemagr.cpp moc_animationstackwidget.cpp moc_iplineedit.cpp moc_customwidget.cpp moc_clineedit.cpp moc_chatstackedwidget.cpp moc_qqlistviewchild.cpp moc_qqlistviewgroup.cpp moc_qqlistwidget.cpp moc_qqpopmenuwidget.cpp moc_chatbubble.cpp moc_chatwindow.cpp
 moc_loginwidget.cpp: ../chatClient/loginwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qwidget.h \
@@ -1368,7 +1387,7 @@ moc_loginwidget.cpp: ../chatClient/loginwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/loginwidget.h -o moc_loginwidget.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/loginwidget.h -o moc_loginwidget.cpp
 
 moc_mainwindow.cpp: ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QMainWindow \
@@ -1562,9 +1581,20 @@ moc_mainwindow.cpp: ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFile \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonValue \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/mainwindow.h -o moc_mainwindow.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/mainwindow.h -o moc_mainwindow.cpp
 
 moc_clientsocket.cpp: ../chatClient/clientsocket.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
@@ -1685,7 +1715,7 @@ moc_clientsocket.cpp: ../chatClient/clientsocket.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/clientsocket.h -o moc_clientsocket.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/clientsocket.h -o moc_clientsocket.cpp
 
 moc_databasemagr.cpp: ../chatClient/databasemagr.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
@@ -1805,7 +1835,7 @@ moc_databasemagr.cpp: ../chatClient/databasemagr.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtsan_impl.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/databasemagr.h -o moc_databasemagr.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/databasemagr.h -o moc_databasemagr.cpp
 
 moc_animationstackwidget.cpp: ../chatClient/basewidget/animationstackwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QStackedWidget \
@@ -1968,7 +1998,7 @@ moc_animationstackwidget.cpp: ../chatClient/basewidget/animationstackwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnativeinterface.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/animationstackwidget.h -o moc_animationstackwidget.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/animationstackwidget.h -o moc_animationstackwidget.cpp
 
 moc_iplineedit.cpp: ../chatClient/basewidget/iplineedit.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QLineEdit \
@@ -2136,7 +2166,7 @@ moc_iplineedit.cpp: ../chatClient/basewidget/iplineedit.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/iplineedit.h -o moc_iplineedit.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/iplineedit.h -o moc_iplineedit.cpp
 
 moc_customwidget.cpp: ../chatClient/basewidget/customwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
@@ -2313,7 +2343,7 @@ moc_customwidget.cpp: ../chatClient/basewidget/customwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/customwidget.h -o moc_customwidget.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/customwidget.h -o moc_customwidget.cpp
 
 moc_clineedit.cpp: ../chatClient/basewidget/clineedit.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QLineEdit \
@@ -2482,7 +2512,7 @@ moc_clineedit.cpp: ../chatClient/basewidget/clineedit.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QEvent \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/clineedit.h -o moc_clineedit.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/clineedit.h -o moc_clineedit.cpp
 
 moc_chatstackedwidget.cpp: ../chatClient/basewidget/chatstackedwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPainter \
@@ -2654,7 +2684,7 @@ moc_chatstackedwidget.cpp: ../chatClient/basewidget/chatstackedwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qeasingcurve.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/chatstackedwidget.h -o moc_chatstackedwidget.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/chatstackedwidget.h -o moc_chatstackedwidget.cpp
 
 moc_qqlistviewchild.cpp: ../chatClient/basewidget/qqlist/qqlistviewchild.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
@@ -2838,7 +2868,7 @@ moc_qqlistviewchild.cpp: ../chatClient/basewidget/qqlist/qqlistviewchild.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qmenu.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqlistviewchild.h -o moc_qqlistviewchild.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqlistviewchild.h -o moc_qqlistviewchild.cpp
 
 moc_qqlistviewgroup.cpp: ../chatClient/basewidget/qqlist/qqlistviewgroup.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
@@ -3047,7 +3077,7 @@ moc_qqlistviewgroup.cpp: ../chatClient/basewidget/qqlist/qqlistviewgroup.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqlistviewgroup.h -o moc_qqlistviewgroup.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqlistviewgroup.h -o moc_qqlistviewgroup.cpp
 
 moc_qqlistwidget.cpp: ../chatClient/basewidget/qqlist/qqlistwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QListWidget \
@@ -3277,7 +3307,7 @@ moc_qqlistwidget.cpp: ../chatClient/basewidget/qqlist/qqlistwidget.h \
 		../chatClient/basewidget/qqlist/qqlistviewchild.h \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqlistwidget.h -o moc_qqlistwidget.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqlistwidget.h -o moc_qqlistwidget.cpp
 
 moc_qqpopmenuwidget.cpp: ../chatClient/basewidget/qqlist/qqpopmenuwidget.h \
 		../chatClient/basewidget/customwidget.h \
@@ -3458,15 +3488,409 @@ moc_qqpopmenuwidget.cpp: ../chatClient/basewidget/qqlist/qqpopmenuwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/QMouseEvent \
 		moc_predefs.h \
 		/opt/Qt/6.5.3/gcc_64/libexec/moc
-	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqpopmenuwidget.h -o moc_qqpopmenuwidget.cpp
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/qqlist/qqpopmenuwidget.h -o moc_qqpopmenuwidget.cpp
+
+moc_chatbubble.cpp: ../chatClient/basewidget/chatbubble.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qaction.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbitmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qeventpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvectornd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpointingdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qscreen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QList \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRect \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSize \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSizeF \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QTransform \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnativeinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPainter \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPaintEvent \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QHBoxLayout \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QScrollBar \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qscrollbar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractslider.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QMenu \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qmenu.h \
+		../chatClient/commonapi/unit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonArray \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonarray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h \
+		moc_predefs.h \
+		/opt/Qt/6.5.3/gcc_64/libexec/moc
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/basewidget/chatbubble.h -o moc_chatbubble.cpp
+
+moc_chatwindow.cpp: ../chatClient/uipage/chatwindow.h \
+		../chatClient/basewidget/customwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qaction.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbitmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qeventpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvectornd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpointingdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qscreen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QList \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRect \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSize \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSizeF \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QTransform \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnativeinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QMutex \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtsan_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QLineEdit \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlineedit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextdocument.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
+		../chatClient/clientsocket.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QTcpSocket \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtcpsocket.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetworkexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qhostaddress.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFile \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		../chatClient/commonapi/qqcell.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QStandardItemModel \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qstandarditemmodel.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTime \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		moc_predefs.h \
+		/opt/Qt/6.5.3/gcc_64/libexec/moc
+	/opt/Qt/6.5.3/gcc_64/libexec/moc $(DEFINES) --include /run/media/root/study/QTprojects/03/instantMessaging/build-chatClient-C_C_2024_02_22-Debug/moc_predefs.h -I/opt/Qt/6.5.3/gcc_64/mkspecs/linux-g++ -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/basewidget -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/commonapi -I/run/media/root/study/QTprojects/03/instantMessaging/chatClient/uipage -I/opt/Qt/6.5.3/gcc_64/include -I/opt/Qt/6.5.3/gcc_64/include/QtWidgets -I/opt/Qt/6.5.3/gcc_64/include/QtGui -I/opt/Qt/6.5.3/gcc_64/include/QtNetwork -I/opt/Qt/6.5.3/gcc_64/include/QtSql -I/opt/Qt/6.5.3/gcc_64/include/QtCore -I. -I/usr/include/c++/13.2.1 -I/usr/include/c++/13.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include-fixed -I/usr/include ../chatClient/uipage/chatwindow.h -o moc_chatwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_loginwidget.h ui_mainwindow.h ui_qqlistviewgroup.h
+compiler_uic_make_all: ui_loginwidget.h ui_mainwindow.h ui_qqlistviewgroup.h ui_chatwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_loginwidget.h ui_mainwindow.h ui_qqlistviewgroup.h
+	-$(DEL_FILE) ui_loginwidget.h ui_mainwindow.h ui_qqlistviewgroup.h ui_chatwindow.h
 ui_loginwidget.h: ../chatClient/loginwidget.ui \
 		/opt/Qt/6.5.3/gcc_64/libexec/uic \
 		../chatClient/basewidget/animationstackwidget.h \
@@ -4135,6 +4559,202 @@ ui_qqlistviewgroup.h: ../chatClient/basewidget/qqlist/qqlistviewgroup.ui \
 		/opt/Qt/6.5.3/gcc_64/libexec/uic
 	/opt/Qt/6.5.3/gcc_64/libexec/uic ../chatClient/basewidget/qqlist/qqlistviewgroup.ui -o ui_qqlistviewgroup.h
 
+ui_chatwindow.h: ../chatClient/uipage/chatwindow.ui \
+		/opt/Qt/6.5.3/gcc_64/libexec/uic \
+		../chatClient/basewidget/chatbubble.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qaction.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbitmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qeventpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvectornd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpointingdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qscreen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QList \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRect \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSize \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSizeF \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QTransform \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnativeinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPainter \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPaintEvent \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QHBoxLayout \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QScrollBar \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qscrollbar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractslider.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QMenu \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qmenu.h \
+		../chatClient/commonapi/unit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonArray \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonarray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h
+	/opt/Qt/6.5.3/gcc_64/libexec/uic ../chatClient/uipage/chatwindow.ui -o ui_chatwindow.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -4396,6 +5016,7 @@ loginwidget.o: ../chatClient/loginwidget.cpp ../chatClient/loginwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonValue \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDebug \
@@ -4631,6 +5252,17 @@ main.o: ../chatClient/main.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFile \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonValue \
 		../chatClient/loginwidget.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qapplication.h \
@@ -4650,7 +5282,6 @@ main.o: ../chatClient/main.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpromise.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication_platform.h \
 		../chatClient/commonapi/global.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/QScreen \
@@ -4664,8 +5295,6 @@ main.o: ../chatClient/main.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qfiledialog.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdir.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfileinfo.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTime \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QProcess \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocess.h \
@@ -4694,13 +5323,6 @@ main.o: ../chatClient/main.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QString \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonArray \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonarray.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../chatClient/main.cpp
@@ -4897,6 +5519,17 @@ mainwindow.o: ../chatClient/mainwindow.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFile \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonValue \
 		ui_mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QVariant \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/QIcon \
@@ -4918,7 +5551,6 @@ mainwindow.o: ../chatClient/mainwindow.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpromise.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication_platform.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QHBoxLayout \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qboxlayout.h \
@@ -4957,7 +5589,6 @@ mainwindow.o: ../chatClient/mainwindow.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qstyleoption.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractspinbox.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvalidator.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qslider.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractslider.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qstyle.h \
@@ -4986,8 +5617,6 @@ mainwindow.o: ../chatClient/mainwindow.cpp ../chatClient/mainwindow.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qfiledialog.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdir.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfileinfo.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTime \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QProcess \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocess.h \
@@ -5012,14 +5641,19 @@ mainwindow.o: ../chatClient/mainwindow.cpp ../chatClient/mainwindow.h \
 		../chatClient/commonapi/unit.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonArray \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonarray.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
-		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h \
+		../chatClient/databasemagr.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/QSqlDatabase \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qsqldatabase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qtsqlglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qtsql-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qtsqlexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/QSqlQuery \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qsqlquery.h \
+		../chatClient/uipage/chatwindow.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QStandardItemModel \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qstandarditemmodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../chatClient/mainwindow.cpp
 
 clientsocket.o: ../chatClient/clientsocket.cpp ../chatClient/clientsocket.h \
@@ -7177,6 +7811,278 @@ qqpopmenuwidget.o: ../chatClient/basewidget/qqlist/qqpopmenuwidget.cpp ../chatCl
 		/opt/Qt/6.5.3/gcc_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qqpopmenuwidget.o ../chatClient/basewidget/qqlist/qqpopmenuwidget.cpp
 
+chatbubble.o: ../chatClient/basewidget/chatbubble.cpp ../chatClient/basewidget/chatbubble.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qaction.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbitmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qeventpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvectornd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpointingdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qscreen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QList \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRect \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSize \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSizeF \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QTransform \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnativeinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPainter \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPaintEvent \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QHBoxLayout \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QScrollBar \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qscrollbar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractslider.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QMenu \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qmenu.h \
+		../chatClient/commonapi/unit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonArray \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonarray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h \
+		../chatClient/commonapi/global.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QScreen \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFile \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTextStream \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QMessageBox \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qmessagebox.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QAbstractButton \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QCoreApplication \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreapplication.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qeventloop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfuture.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfutureinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtsan_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qresultstore.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfuture_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qthreadpool.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qthread.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qelapsedtimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrunnable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexception.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpromise.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QFileDialog \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qfiledialog.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdir.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfileinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTime \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QProcess \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocess.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDir \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QApplication \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qapplication.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputmethod.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication_platform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QStyleFactory \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qstylefactory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QInputDialog \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qinputdialog.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlineedit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextdocument.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QHostAddress \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qhostaddress.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetworkexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QNetworkInterface \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qnetworkinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QHostInfo \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qhostinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QStyle \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qstyle.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDateTime \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSettings \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsettings.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QBitmap \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPixmap \
+		../chatClient/commonapi/myapp.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFileInfo \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QFileIconProvider \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qfileiconprovider.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qabstractfileiconprovider.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QDesktopServices \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qdesktopservices.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPainterPath \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpainterpath.h \
+		../chatClient/commonapi/iteminfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRectF
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chatbubble.o ../chatClient/basewidget/chatbubble.cpp
+
 myapp.o: ../chatClient/commonapi/myapp.cpp ../chatClient/commonapi/myapp.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
@@ -7438,6 +8344,477 @@ qqcell.o: ../chatClient/commonapi/qqcell.cpp ../chatClient/commonapi/qqcell.h \
 		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringmatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qqcell.o ../chatClient/commonapi/qqcell.cpp
 
+iteminfo.o: ../chatClient/commonapi/iteminfo.cpp ../chatClient/commonapi/iteminfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPixmap \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRectF \
+		../chatClient/commonapi/unit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonArray \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonarray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o iteminfo.o ../chatClient/commonapi/iteminfo.cpp
+
+chatwindow.o: ../chatClient/uipage/chatwindow.cpp ../chatClient/uipage/chatwindow.h \
+		../chatClient/basewidget/customwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QWidget \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtguiexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qaction.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qrgba64.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qshareddata_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qbitmap.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpointer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qeventpoint.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvectornd.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpointingdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputdevice.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qscreen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QList \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRect \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSize \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSizeF \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QTransform \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qnativeinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QDialog \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QMutex \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtsan_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QLineEdit \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlineedit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextcursor.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextdocument.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextformat.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qtextoption.h \
+		../chatClient/clientsocket.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QTcpSocket \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtcpsocket.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qtnetworkexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qhostaddress.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFile \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfiledevice.h \
+		../chatClient/commonapi/qqcell.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QStandardItemModel \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qstandarditemmodel.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTime \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcalendar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qlocale.h \
+		ui_chatwindow.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QVariant \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QIcon \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QApplication \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qapplication.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreapplication.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qeventloop.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfuture.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfutureinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qresultstore.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfuture_impl.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qthreadpool.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qthread.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qelapsedtimer.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qrunnable.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qexception.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qpromise.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qinputmethod.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qguiapplication_platform.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QFormLayout \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qformlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QLayout \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QHBoxLayout \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QHeaderView \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qheaderview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qstyleoption.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qvalidator.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qslider.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractslider.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qstyle.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtabbar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtabwidget.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qrubberband.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QLabel \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qlabel.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpicture.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QProgressBar \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qprogressbar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QPushButton \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QSpacerItem \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QTableView \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtableview.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QTextEdit \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtextedit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QToolButton \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtoolbutton.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QVBoxLayout \
+		../chatClient/basewidget/chatbubble.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPainter \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPaintEvent \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QScrollBar \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qscrollbar.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QMenu \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qmenu.h \
+		../chatClient/commonapi/unit.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonArray \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonarray.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborvalue.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qcborcommon.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/quuid.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonObject \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsonobject.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QJsonDocument \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qjsondocument.h \
+		../chatClient/commonapi/iteminfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QPixmap \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QRectF \
+		../chatClient/commonapi/global.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QScreen \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QTextStream \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QMessageBox \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qmessagebox.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QAbstractButton \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QCoreApplication \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QFileDialog \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qfiledialog.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qdir.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qfileinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QProcess \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qprocess.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDir \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QStyleFactory \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qstylefactory.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QInputDialog \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qinputdialog.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QHostAddress \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QNetworkInterface \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qnetworkinterface.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/QHostInfo \
+		/opt/Qt/6.5.3/gcc_64/include/QtNetwork/qhostinfo.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QStyle \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QDateTime \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QSettings \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/qsettings.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QBitmap \
+		../chatClient/commonapi/myapp.h \
+		../chatClient/databasemagr.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/QSqlDatabase \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qsqldatabase.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qtsqlglobal.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qtsql-config.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qtsqlexports.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/QSqlQuery \
+		/opt/Qt/6.5.3/gcc_64/include/QtSql/qsqlquery.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QAction \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QActionGroup \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/qactiongroup.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtGui/QKeyEvent \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/QToolTip \
+		/opt/Qt/6.5.3/gcc_64/include/QtWidgets/qtooltip.h \
+		/opt/Qt/6.5.3/gcc_64/include/QtCore/QFileInfo
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chatwindow.o ../chatClient/uipage/chatwindow.cpp
+
 qrc_resource.o: qrc_resource.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resource.o qrc_resource.cpp
 
@@ -7479,6 +8856,12 @@ moc_qqlistwidget.o: moc_qqlistwidget.cpp
 
 moc_qqpopmenuwidget.o: moc_qqpopmenuwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qqpopmenuwidget.o moc_qqpopmenuwidget.cpp
+
+moc_chatbubble.o: moc_chatbubble.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_chatbubble.o moc_chatbubble.cpp
+
+moc_chatwindow.o: moc_chatwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_chatwindow.o moc_chatwindow.cpp
 
 ####### Install
 

@@ -35,3 +35,4 @@ RESOURCES += \
 
 include ($$PWD/basewidget/basewidget.pri)
 include ($$PWD/commonapi/commonapi.pri)
+include ($$PWD/uipage/uipage.pri)

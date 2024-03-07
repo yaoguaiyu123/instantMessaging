@@ -7,12 +7,14 @@ HEADERS += \
     $$PWD/global.h \
     $$PWD/myapp.h \
     $$PWD/qqcell.h \
-    $$PWD/unit.h
+    $$PWD/unit.h \
+    $$PWD/iteminfo.h
 
 
 SOURCES += \
     $$PWD/myapp.cpp \
-    $$PWD/qqcell.cpp
+    $$PWD/qqcell.cpp \
+    $$PWD/iteminfo.cpp
 
 
 ##pri文件

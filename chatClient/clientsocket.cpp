@@ -182,6 +182,14 @@ void ClientSocket::ParseLogin(QJsonValue dataval)
 }
 
 
+//接收到chatwindow信号(聊天信息)的槽函数
+void ClientSocket::onSendMessage(const qint8 type, const QJsonValue& json){
 
+}
+
+//接收到chatwindow信号(好友关闭)的槽函数
+void ClientSocket::onFriendChatWindowClose(){
+
+}
 
 

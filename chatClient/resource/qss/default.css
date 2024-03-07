@@ -145,7 +145,7 @@ QLabel#label,QLabel#label_3,QLabel#label_5,QLabel#label_7{
 QWidget#ChatWindow {
     border: 1px solid #333333;
     border-radius: 2px;
-    background-color: #31A668;
+    background-color: #00aaff;
 }
 
 QWidget#widgetSetting {
@@ -155,7 +155,7 @@ QWidget#widgetSetting {
 
 QWidget#widgetMsg,QTextEdit,QWidget#widgetBubble {
     border: none;
-    background-color: #D3ECE4;
+    background-color: #ffffff;
 }
 
 QWidget#widgetSetting {
@@ -177,7 +177,7 @@ QWidget#widgetSetting QToolButton:hover {
 QPushButton#btnClose,QPushButton#btnAction, QPushButton#btnSendMsg {
     border: none;
     border-radius: 5px;
-    background-color: #31A668;
+    background-color: #00aaff;
     color: #FFFFFF;
     min-width: 80px;
     min-height: 25px;
@@ -185,7 +185,7 @@ QPushButton#btnClose,QPushButton#btnAction, QPushButton#btnSendMsg {
 }
 
 QPushButton#btnClose:hover,QPushButton#btnSendMsg:hover,QPushButton#btnAction:hover {
-    background-color: #75D5A5;
+    background-color: #0077ff;
 }
 
 QPushButton::menu-indicator {

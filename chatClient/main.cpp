@@ -5,6 +5,7 @@
 #include "loginwidget.h"
 #include <QApplication>
 #include "global.h"
+#include "databasemagr.h"
 
 
 int main(int argc, char *argv[])
@@ -13,6 +14,8 @@ int main(int argc, char *argv[])
 //    MainWindow w;
 //    w.show();
     qDebug() << myHelper::GetIP();
+    DataBaseMagr::Instance()->OpenUserDb("user.db");
+    DataBaseMagr::Instance()->OpenMessageDb("msg.db");
     LoginWidget l;
     myHelper::FormInCenter(&l);  //设置窗体居中
     l.show();

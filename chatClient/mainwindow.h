@@ -42,6 +42,9 @@ private slots:
     void SltFriendsClicked(QQCell *cell);
     // 群组列表点击
     void SltGroupsClicked(QQCell *cell);
+    // 关闭与好友的聊天窗口
+    void SltFriendChatWindowClose();
+
 private:
     Ui::MainWindow *ui;
     QButtonGroup* m_buttonGroup;

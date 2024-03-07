@@ -1,7 +1,6 @@
 #include "databasemagr.h"
 #include "unit.h"
-//#include "iteminfo.h"
-
+#include "iteminfo.h"
 #include <QDebug>
 
 DataBaseMagr *DataBaseMagr::self = NULL;
@@ -74,32 +73,32 @@ bool DataBaseMagr::OpenMessageDb(const QString &dataName)
 // * @param userId
 // * @param itemInfo
 // */
-//void DataBaseMagr::AddHistoryMsg(const int &userId, ItemInfo *itemInfo)
-//{
-//    // 查询数据库
-//    QSqlQuery query("SELECT [id] FROM MSGINFO ORDER BY id DESC;", msgdb);
-//    int nId = 0;
-//    // 查询最高ID
-//    if (query.next()) {
-//        nId = query.value(0).toInt();
-//    }
+void DataBaseMagr::AddHistoryMsg(const int &userId, ItemInfo *itemInfo)
+{
+    // 查询数据库
+    QSqlQuery query("SELECT [id] FROM MSGINFO ORDER BY id DESC;", msgdb);
+    int nId = 0;
+    // 查询最高ID
+    if (query.next()) {
+        nId = query.value(0).toInt();
+    }
 
-//    // 根据新ID重新创建用户
-//    query.prepare("INSERT INTO MSGINFO (id, userId, name, head, datetime, filesize, content, type, direction) "
-//                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+    // 根据新ID重新创建用户
+    query.prepare("INSERT INTO MSGINFO (id, userId, name, head, datetime, filesize, content, type, direction) "
+                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
-//    query.bindValue(0, nId + 1);
-//    query.bindValue(1, userId);
-//    query.bindValue(2, itemInfo->GetName());
-//    query.bindValue(3, itemInfo->GetStrPixmap());
-//    query.bindValue(4, itemInfo->GetDatetime());
-//    query.bindValue(5, itemInfo->GetText());
-//    query.bindValue(6, itemInfo->GetFileSizeString());
-//    query.bindValue(7, itemInfo->GetOrientation());
-//    query.bindValue(8, itemInfo->GetMsgType());
+    query.bindValue(0, nId + 1);
+    query.bindValue(1, userId);
+    query.bindValue(2, itemInfo->GetName());
+    query.bindValue(3, itemInfo->GetStrPixmap());
+    query.bindValue(4, itemInfo->GetDatetime());
+    query.bindValue(5, itemInfo->GetText());
+    query.bindValue(6, itemInfo->GetFileSizeString());
+    query.bindValue(7, itemInfo->GetOrientation());
+    query.bindValue(8, itemInfo->GetMsgType());
 
-//    query.exec();
-//}
+    query.exec();
+}
 
 ///**
 // * @brief DataBaseMagr::AddFriend

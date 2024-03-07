@@ -9,6 +9,7 @@
 #include <QDebug>
 #include "databasemagr.h"
 #include "qqlist/qqlistwidget.h"
+#include "chatwindow.h"
 
 
 
@@ -368,12 +369,27 @@ void MainWindow::onChildPopMenuDidSelected(QAction *action)
     }
 }
 
+//好友点击
 void MainWindow::SltFriendsClicked(QQCell *cell)
 {
+    ChatWindow* chatwindow = new ChatWindow();
+    connect(chatwindow, &ChatWindow::signalSendMessage, m_tcpSocket, &ClientSocket::onSendMessage);
+    connect(chatwindow, &ChatWindow::signalClose, m_tcpSocket, &ClientSocket::onFriendChatWindowClose);
+    //设置窗口属性
+    //这里传入的cell表示好友
+    chatwindow->SetCell(cell);
+    chatwindow->show();
 
 }
 
+//群组点击
 void MainWindow::SltGroupsClicked(QQCell *cell)
 {
 
 }
+
+//关闭与好友的窗口
+void MainWindow::SltFriendChatWindowClose(){
+
+}
+

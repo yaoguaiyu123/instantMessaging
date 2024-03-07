@@ -12,7 +12,8 @@ HEADERS += \
     $$PWD/qqlist/qqlistviewchild.h \
     $$PWD/qqlist/qqlistviewgroup.h \
     $$PWD/qqlist/qqlistwidget.h \
-    $$PWD/qqlist/qqpopmenuwidget.h
+    $$PWD/qqlist/qqpopmenuwidget.h \
+    $$PWD/chatbubble.h
 
 SOURCES += \
     $$PWD/animationstackwidget.cpp \
@@ -23,7 +24,8 @@ SOURCES += \
     $$PWD/qqlist/qqlistviewchild.cpp \
     $$PWD/qqlist/qqlistviewgroup.cpp \
     $$PWD/qqlist/qqlistwidget.cpp \
-    $$PWD/qqlist/qqpopmenuwidget.cpp
+    $$PWD/qqlist/qqpopmenuwidget.cpp \
+    $$PWD/chatbubble.cpp
 
 ##pri文件
 

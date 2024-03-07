@@ -29,6 +29,10 @@ signals:
 public slots:
     // socket消息发送封装
     void SltSendMessage(const quint8 &type, const QJsonValue &dataVal);
+    //接收到chatwindow信号(聊天信息)的槽函数
+    void onSendMessage(const qint8 type, const QJsonValue& json);
+    //接收到chatwindow信号(好友关闭)的槽函数
+    void onFriendChatWindowClose();
 private:
     // tcpsocket
     QTcpSocket *m_tcpSocket;
