@@ -9,6 +9,9 @@
 #include <QProcess>
 #include <QDebug>
 
+//存放相关的用户数据
+
+
 // 应用程序配置目录
 QString MyApp::m_strAppPath         = "./";
 QString MyApp::m_strDataPath        = "";

@@ -22,7 +22,7 @@ class ChatWindow : public CustomMoveWidget
 public:
     explicit ChatWindow(QWidget *parent = 0);
     ~ChatWindow();
-
+    void setSocket(ClientSocket* socket);
     void SetCell(QQCell *cell, const quint8 &type = 0);
     QString GetIpAddr() const;
     int GetUserId() const;
@@ -34,13 +34,14 @@ public:
 signals:
     void signalClose();
     // 发送给服务器的消息
-    void signalSendMessage(const quint8 &type, const QJsonValue &json);
+    void signalSendMessage(const quint8& type, const QJsonValue& json);
+
 protected:
     void changeEvent(QEvent *e);
     void keyPressEvent(QKeyEvent *event);
 private:
     Ui::ChatWindow *ui;
-
+    ClientSocket* m_socket;
     // 用户相关信息保存
     QQCell *m_cell;
     QStandardItemModel *m_model;
@@ -73,6 +74,8 @@ private slots:
     void on_toolButton_4_clicked();
 
     void on_toolButton_3_clicked();
+    void SltTcpStatus(const quint8& state);
+    void SltTcpMessage(const quint8& type, const QJsonValue& datacal);
 
 public slots:
 

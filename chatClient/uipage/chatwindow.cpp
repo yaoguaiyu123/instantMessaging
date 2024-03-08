@@ -260,7 +260,9 @@ void ChatWindow::on_btnSendMsg_clicked()
     json.insert("type", Text);
 
     // 发送消息
-    Q_EMIT signalSendMessage(0 == m_nChatType ? SendMsg : SendGroupMsg, json);
+//    Q_EMIT signalSendMessage(0 == m_nChatType ? SendMsg : SendGroupMsg, json);
+    m_socket->SltSendMessage(type,dataval);
+
 
     // 构建气泡消息
     ItemInfo *itemInfo = new ItemInfo();
@@ -403,6 +405,26 @@ QString ChatWindow::GetHeadPixmap(const QString &name) const
     }
 
     return ":/resource/head/1.bmp";
+}
+
+//
+void ChatWindow::setSocket(ClientSocket* socket)
+{
+    if (socket != nullptr) {
+        m_socket = socket;
+        connect(m_socket, &ClientSocket::signalStatus, this, &ChatWindow::SltTcpStatus);
+        connect(m_socket, &ClientSocket::signalMessage, this, &ChatWindow::SltTcpMessage);
+    }
+}
+
+void ChatWindow::SltTcpStatus(const quint8& state)
+{
+}
+
+//处理来自服务端的好友消息
+void ChatWindow::SltTcpMessage(const quint8& type, const QJsonValue& dataval)
+{
+
 }
 
 // 插入表情

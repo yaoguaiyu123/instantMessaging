@@ -151,6 +151,9 @@ void ClientSocket::SltReadyRead()
             case AddFriendRequist:
                 emit signalMessage(AddFriendRequist,dataval);
                 break;
+            case GetMyFriends:
+                emit signalMessage(GetMyFriends,dataval);
+                break;
             }
 
         }
@@ -169,6 +172,7 @@ void ClientSocket::ParseLogin(QJsonValue dataval)
         // 登录成功
         qDebug() << "登录成功,id = " << id;
         m_nId = id;
+        MyApp::m_nId = id;
         emit signalMessage(LoginSuccess,dataval);
     } else {
         if (code == -2) {
@@ -183,13 +187,13 @@ void ClientSocket::ParseLogin(QJsonValue dataval)
 
 
 //接收到chatwindow信号(聊天信息)的槽函数
-void ClientSocket::onSendMessage(const qint8 type, const QJsonValue& json){
+//void ClientSocket::onSendMessage(const qint8 type, const QJsonValue& json){
 
-}
+//}
 
 //接收到chatwindow信号(好友关闭)的槽函数
-void ClientSocket::onFriendChatWindowClose(){
+//void ClientSocket::onFriendChatWindowClose(){
 
-}
+//}
 
 

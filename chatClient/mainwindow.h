@@ -25,6 +25,7 @@ public:
     void setScoket(ClientSocket* socket, const QString& name);
     void InitQQListMenu();
 
+
 private slots:
     void on_btnWinClose_clicked();
     void SltMainPageChanged(int index);
@@ -44,7 +45,8 @@ private slots:
     void SltGroupsClicked(QQCell *cell);
     // 关闭与好友的聊天窗口
     void SltFriendChatWindowClose();
-
+    // 获取好友列表,加载已经添加的好友
+    void PraseInitFriendList(const QJsonValue& dataval);
 private:
     Ui::MainWindow *ui;
     QButtonGroup* m_buttonGroup;

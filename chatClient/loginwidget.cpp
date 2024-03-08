@@ -8,6 +8,7 @@
 #include <QDebug>
 #include "unit.h"
 #include "global.h"
+#include "myapp.h"
 
 
 LoginWidget::LoginWidget(QWidget *parent) :
@@ -98,6 +99,7 @@ void LoginWidget::on_signalMessage(const quint8& state, const QJsonValue& datava
         mainwindow->setScoket(m_tcpSocket,ui->lineEditUser->text());
         mainwindow->show();
         this->hide();
+
     }
     break;
         break;

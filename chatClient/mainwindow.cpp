@@ -17,6 +17,7 @@ MainWindow::MainWindow(const QJsonValue &jsonVal,QWidget *parent)
     : CustomMoveWidget(parent)
     , ui(new Ui::MainWindow)
 {
+//    qDebug() << "MainWindow中输出:" << jsonVal;
     ui->setupUi(this);
     //去掉Qt自带的标题栏
     this->setWindowFlags(Qt::FramelessWindowHint);
@@ -28,16 +29,19 @@ MainWindow::MainWindow(const QJsonValue &jsonVal,QWidget *parent)
     connect(m_buttonGroup, &QButtonGroup::idClicked, this, &MainWindow::SltMainPageChanged);
     InitSystemTrayIcon();
     ui->GCStackedWidget->setCurrentIndex(0);
-    //初始化好友列表
-    InitQQListMenu();
     // 初始化姓名和头像
     if (jsonVal.isObject()) {
         QJsonObject object = jsonVal.toObject();
         QString head = object.value("head").toString();
-        ui->labelUser->setText(m_username);
         m_head = head;
         ui->widgetHead->setStyleSheet(tr("border-image:url(:/resource/head/%1)").arg(m_head));
+        // 更新全局用户设置
+        MyApp::m_nId = object.value("id").toInt();
+        MyApp::m_strHeadPath = head;
+        MyApp::m_strUserName = m_username;
     }
+    //初始化好友列表
+    InitQQListMenu();
 }
 
 
@@ -116,6 +120,7 @@ void MainWindow::SltQuitapp()
     qApp->quit();
 }
 
+//设置socket和用户名
 void MainWindow::setScoket(ClientSocket* socket, const QString& name)
 {
     if (socket != nullptr) {
@@ -124,9 +129,14 @@ void MainWindow::setScoket(ClientSocket* socket, const QString& name)
         connect(m_tcpSocket, &ClientSocket::signalMessage, this, &MainWindow::SltTcpReply);
     }
     m_username = name;
+    MyApp::m_strUserName = name;
     ui->labelUser->setText(m_username);
+    //获取好友列表
+    QJsonArray jsonArray = DataBaseMagr::Instance()->GetMyFriend(MyApp::m_nId);
+    m_tcpSocket->SltSendMessage(GetMyFriends,jsonArray);
 }
 
+//处理clientScoket类的信号
 void MainWindow::SltTcpReply(const quint8& type, const QJsonValue& dataval)
 {
     switch (type) {
@@ -135,8 +145,11 @@ void MainWindow::SltTcpReply(const quint8& type, const QJsonValue& dataval)
         break;
     case AddFriendRequist:  //服务器通知被添加的好友
         PraseAddFriendRequestReply(dataval);
-
         break;
+    case GetMyFriends: // 加载好友列表
+        PraseInitFriendList(dataval);
+        break;
+
     default:
         break;
     }
@@ -159,7 +172,9 @@ void MainWindow::PraseAddFriendReply(const QJsonValue& datavalue)
         cell->id = id;
         cell->status = status;
         ui->frindListWidget->insertQQCell(cell);
+        // 加入数据库
         DataBaseMagr::Instance()->AddFriend(cell->id, MyApp::m_nId, cell->name);
+
     }
 }
 
@@ -186,6 +201,39 @@ void MainWindow::PraseAddFriendRequestReply(const QJsonValue& dataval)
         }
     }
 }
+
+// 获取好友列表,加载已经添加的好友
+void MainWindow::PraseInitFriendList(const QJsonValue& dataval)
+{
+    qDebug() << "正在获取好友列表";
+    if (dataval.isArray()) {
+        QJsonArray array = dataval.toArray();
+        for (int i = 0; i < array.size(); ++i) {
+            QJsonValue value = array.at(i);
+            QJsonObject object;
+            if (value.isObject()) {
+                object = value.toObject();
+            } else {
+                return;
+            }
+            QString name = object.value("name").toString();
+            int status = object.value("status").toInt();
+            int id = object.value("id").toInt();
+            QString head = object.value("head").toString();
+            QQCell* cell = new QQCell;
+            cell->groupName = QString("我的好友");
+            cell->iconPath = ":/resource/head/"+ head;
+            cell->type = QQCellType_Child;
+            cell->name = name;
+            cell->subTitle = QString("当前用户状态:%1").arg(OnLine == status ? "在线" : "离线");
+            cell->id = id;
+            cell->status = status;
+            ui->frindListWidget->insertQQCell(cell);
+        }
+    }
+
+}
+
 
 
 void MainWindow::SltTcpStatus(const quint8& state){
@@ -270,6 +318,7 @@ void MainWindow::InitQQListMenu()
     connect(ui->groupListWidget, SIGNAL(onChildDidDoubleClicked(QQCell*)), this, SLOT(SltGroupsClicked(QQCell*)));
 }
 
+
 //添加好友
 void MainWindow::onAddFriendMenuDidSelected(QAction *action)
 {
@@ -285,6 +334,7 @@ void MainWindow::onAddFriendMenuDidSelected(QAction *action)
             }
 
             // 构建 Json 对象
+            //
             QJsonObject json;
             json.insert("id", m_tcpSocket->GetUserId());
             json.insert("name", text);
