@@ -115,6 +115,18 @@ int ChatWindow::GetUserId() const
     return m_cell->id;
 }
 
+
+void ChatWindow::SltTcpMessage(const quint8 &type, const QJsonValue &dataVal){
+    switch (type) {
+    case SendMsg:
+        AddMessage(dataVal);
+        break;
+    default:
+        break;
+    }
+}
+
+
 /**
  * @brief ChatWindow::AddMessage
  * 接受服务器转发过来的消息
@@ -122,6 +134,7 @@ int ChatWindow::GetUserId() const
  */
 void ChatWindow::AddMessage(const QJsonValue &json)
 {
+    qDebug() << "&&&&&&&& AddMessage";
     if (json.isObject()) {
         QJsonObject dataObj = json.toObject();
         int type = dataObj.value("type").toInt();
@@ -261,14 +274,14 @@ void ChatWindow::on_btnSendMsg_clicked()
 
     // 发送消息
 //    Q_EMIT signalSendMessage(0 == m_nChatType ? SendMsg : SendGroupMsg, json);
-    m_socket->SltSendMessage(type,dataval);
+    m_socket->SltSendMessage(0 == m_nChatType ? SendMsg : SendGroupMsg,json);
 
 
     // 构建气泡消息
     ItemInfo *itemInfo = new ItemInfo();
     itemInfo->SetName(MyApp::m_strUserName);
     itemInfo->SetDatetime(DATE_TIME);
-    itemInfo->SetHeadPixmap(MyApp::m_strHeadFile);
+    itemInfo->SetHeadPixmap(":/resource/head/" + MyApp::m_strHeadPath);
     itemInfo->SetText(text);
     itemInfo->SetOrientation(Right);
 
@@ -322,7 +335,8 @@ void ChatWindow::on_toolButton_7_clicked()
     m_nFileType = SendPicture;
 
     // 发送消息
-    Q_EMIT signalSendMessage(SendPicture, json);
+//    Q_EMIT signalSendMessage(SendPicture, json);
+    m_socket->SltSendMessage(0 == m_nChatType ? SendMsg : SendGroupMsg,json);
 
     // 构建气泡消息
     ItemInfo *itemInfo = new ItemInfo();
@@ -421,11 +435,6 @@ void ChatWindow::SltTcpStatus(const quint8& state)
 {
 }
 
-//处理来自服务端的好友消息
-void ChatWindow::SltTcpMessage(const quint8& type, const QJsonValue& dataval)
-{
-
-}
 
 // 插入表情
 void ChatWindow::on_toolButton_3_clicked()

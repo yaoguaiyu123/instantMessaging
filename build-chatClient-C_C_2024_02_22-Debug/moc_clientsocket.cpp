@@ -46,16 +46,13 @@ static constexpr auto qt_meta_stringdata_CLASSClientSocketENDCLASS = QtMocHelper
     "signalStatus",
     "state",
     "SltSendMessage",
-    "onSendMessage",
-    "json",
-    "onFriendChatWindowClose",
     "SltDisconnected",
     "SltConnected",
     "SltReadyRead"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSClientSocketENDCLASS_t {
-    uint offsetsAndSizes[28];
+    uint offsetsAndSizes[22];
     char stringdata0[13];
     char stringdata1[14];
     char stringdata2[1];
@@ -64,12 +61,9 @@ struct qt_meta_stringdata_CLASSClientSocketENDCLASS_t {
     char stringdata5[13];
     char stringdata6[6];
     char stringdata7[15];
-    char stringdata8[14];
-    char stringdata9[5];
-    char stringdata10[24];
-    char stringdata11[16];
-    char stringdata12[13];
-    char stringdata13[13];
+    char stringdata8[16];
+    char stringdata9[13];
+    char stringdata10[13];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSClientSocketENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -83,12 +77,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSClientSocketENDCLASS_t qt_meta_
         QT_MOC_LITERAL(41, 12),  // "signalStatus"
         QT_MOC_LITERAL(54, 5),  // "state"
         QT_MOC_LITERAL(60, 14),  // "SltSendMessage"
-        QT_MOC_LITERAL(75, 13),  // "onSendMessage"
-        QT_MOC_LITERAL(89, 4),  // "json"
-        QT_MOC_LITERAL(94, 23),  // "onFriendChatWindowClose"
-        QT_MOC_LITERAL(118, 15),  // "SltDisconnected"
-        QT_MOC_LITERAL(134, 12),  // "SltConnected"
-        QT_MOC_LITERAL(147, 12)   // "SltReadyRead"
+        QT_MOC_LITERAL(75, 15),  // "SltDisconnected"
+        QT_MOC_LITERAL(91, 12),  // "SltConnected"
+        QT_MOC_LITERAL(104, 12)   // "SltReadyRead"
     },
     "ClientSocket",
     "signalMessage",
@@ -98,9 +89,6 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSClientSocketENDCLASS_t qt_meta_
     "signalStatus",
     "state",
     "SltSendMessage",
-    "onSendMessage",
-    "json",
-    "onFriendChatWindowClose",
     "SltDisconnected",
     "SltConnected",
     "SltReadyRead"
@@ -115,7 +103,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSClientSocketENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -123,16 +111,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSClientSocketENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   62,    2, 0x06,    1 /* Public */,
-       5,    1,   67,    2, 0x06,    4 /* Public */,
+       1,    2,   50,    2, 0x06,    1 /* Public */,
+       5,    1,   55,    2, 0x06,    4 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       7,    2,   70,    2, 0x0a,    6 /* Public */,
-       8,    2,   75,    2, 0x0a,    9 /* Public */,
-      10,    0,   80,    2, 0x0a,   12 /* Public */,
-      11,    0,   81,    2, 0x08,   13 /* Private */,
-      12,    0,   82,    2, 0x08,   14 /* Private */,
-      13,    0,   83,    2, 0x08,   15 /* Private */,
+       7,    2,   58,    2, 0x0a,    6 /* Public */,
+       8,    0,   63,    2, 0x08,    9 /* Private */,
+       9,    0,   64,    2, 0x08,   10 /* Private */,
+      10,    0,   65,    2, 0x08,   11 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::UChar, QMetaType::QJsonValue,    3,    4,
@@ -140,8 +126,6 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSClientSocketENDCLASS[] = {
 
  // slots: parameters
     QMetaType::Void, QMetaType::UChar, QMetaType::QJsonValue,    3,    4,
-    QMetaType::Void, QMetaType::SChar, QMetaType::QJsonValue,    3,    9,
-    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -169,12 +153,6 @@ Q_CONSTINIT const QMetaObject ClientSocket::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const quint8 &, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QJsonValue &, std::false_type>,
-        // method 'onSendMessage'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<const qint8, std::false_type>,
-        QtPrivate::TypeAndForceComplete<const QJsonValue &, std::false_type>,
-        // method 'onFriendChatWindowClose'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SltDisconnected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SltConnected'
@@ -194,11 +172,9 @@ void ClientSocket::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->signalMessage((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QJsonValue>>(_a[2]))); break;
         case 1: _t->signalStatus((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         case 2: _t->SltSendMessage((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QJsonValue>>(_a[2]))); break;
-        case 3: _t->onSendMessage((*reinterpret_cast< std::add_pointer_t<qint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QJsonValue>>(_a[2]))); break;
-        case 4: _t->onFriendChatWindowClose(); break;
-        case 5: _t->SltDisconnected(); break;
-        case 6: _t->SltConnected(); break;
-        case 7: _t->SltReadyRead(); break;
+        case 3: _t->SltDisconnected(); break;
+        case 4: _t->SltConnected(); break;
+        case 5: _t->SltReadyRead(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -239,13 +215,13 @@ int ClientSocket::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        _id -= 6;
     }
     return _id;
 }

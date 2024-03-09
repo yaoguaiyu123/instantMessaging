@@ -152,7 +152,10 @@ void ClientSocket::SltReadyRead()
                 emit signalMessage(AddFriendRequist,dataval);
                 break;
             case GetMyFriends:
-                emit signalMessage(GetMyFriends,dataval);
+                emit signalMessage(GetMyFriends, dataval);
+                break;
+            case SendMsg:
+                emit signalMessage(SendMsg,dataval);
                 break;
             }
 

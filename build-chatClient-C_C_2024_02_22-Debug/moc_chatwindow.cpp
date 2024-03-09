@@ -61,11 +61,15 @@ static constexpr auto qt_meta_stringdata_CLASSChatWindowENDCLASS = QtMocHelpers:
     "SltDownloadFiles",
     "fileName",
     "on_toolButton_4_clicked",
-    "on_toolButton_3_clicked"
+    "on_toolButton_3_clicked",
+    "SltTcpMessage",
+    "dataVal",
+    "SltTcpStatus",
+    "state"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSChatWindowENDCLASS_t {
-    uint offsetsAndSizes[46];
+    uint offsetsAndSizes[54];
     char stringdata0[11];
     char stringdata1[12];
     char stringdata2[1];
@@ -89,6 +93,10 @@ struct qt_meta_stringdata_CLASSChatWindowENDCLASS_t {
     char stringdata20[9];
     char stringdata21[24];
     char stringdata22[24];
+    char stringdata23[14];
+    char stringdata24[8];
+    char stringdata25[13];
+    char stringdata26[6];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSChatWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -116,7 +124,11 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSChatWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(261, 16),  // "SltDownloadFiles"
         QT_MOC_LITERAL(278, 8),  // "fileName"
         QT_MOC_LITERAL(287, 23),  // "on_toolButton_4_clicked"
-        QT_MOC_LITERAL(311, 23)   // "on_toolButton_3_clicked"
+        QT_MOC_LITERAL(311, 23),  // "on_toolButton_3_clicked"
+        QT_MOC_LITERAL(335, 13),  // "SltTcpMessage"
+        QT_MOC_LITERAL(349, 7),  // "dataVal"
+        QT_MOC_LITERAL(357, 12),  // "SltTcpStatus"
+        QT_MOC_LITERAL(370, 5)   // "state"
     },
     "ChatWindow",
     "signalClose",
@@ -140,7 +152,11 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSChatWindowENDCLASS_t qt_meta_st
     "SltDownloadFiles",
     "fileName",
     "on_toolButton_4_clicked",
-    "on_toolButton_3_clicked"
+    "on_toolButton_3_clicked",
+    "SltTcpMessage",
+    "dataVal",
+    "SltTcpStatus",
+    "state"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -152,7 +168,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChatWindowENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -160,22 +176,24 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChatWindowENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   98,    2, 0x06,    1 /* Public */,
-       3,    2,   99,    2, 0x06,    2 /* Public */,
+       1,    0,  110,    2, 0x06,    1 /* Public */,
+       3,    2,  111,    2, 0x06,    2 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       6,    1,  104,    2, 0x08,    5 /* Private */,
-       8,    0,  107,    2, 0x08,    7 /* Private */,
-       9,    0,  108,    2, 0x08,    8 /* Private */,
-      10,    0,  109,    2, 0x08,    9 /* Private */,
-      11,    2,  110,    2, 0x08,   10 /* Private */,
-      13,    2,  115,    2, 0x08,   13 /* Private */,
-      16,    0,  120,    2, 0x08,   16 /* Private */,
-      17,    0,  121,    2, 0x08,   17 /* Private */,
-      18,    0,  122,    2, 0x08,   18 /* Private */,
-      19,    1,  123,    2, 0x08,   19 /* Private */,
-      21,    0,  126,    2, 0x08,   21 /* Private */,
-      22,    0,  127,    2, 0x08,   22 /* Private */,
+       6,    1,  116,    2, 0x08,    5 /* Private */,
+       8,    0,  119,    2, 0x08,    7 /* Private */,
+       9,    0,  120,    2, 0x08,    8 /* Private */,
+      10,    0,  121,    2, 0x08,    9 /* Private */,
+      11,    2,  122,    2, 0x08,   10 /* Private */,
+      13,    2,  127,    2, 0x08,   13 /* Private */,
+      16,    0,  132,    2, 0x08,   16 /* Private */,
+      17,    0,  133,    2, 0x08,   17 /* Private */,
+      18,    0,  134,    2, 0x08,   18 /* Private */,
+      19,    1,  135,    2, 0x08,   19 /* Private */,
+      21,    0,  138,    2, 0x08,   21 /* Private */,
+      22,    0,  139,    2, 0x08,   22 /* Private */,
+      23,    2,  140,    2, 0x08,   23 /* Private */,
+      25,    1,  145,    2, 0x08,   26 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -194,6 +212,8 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChatWindowENDCLASS[] = {
     QMetaType::Void, QMetaType::QString,   20,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::UChar, QMetaType::QJsonValue,    4,   24,
+    QMetaType::Void, QMetaType::UChar,   26,
 
        0        // eod
 };
@@ -242,7 +262,14 @@ Q_CONSTINIT const QMetaObject ChatWindow::staticMetaObject = { {
         // method 'on_toolButton_4_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_toolButton_3_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'SltTcpMessage'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const quint8 &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QJsonValue &, std::false_type>,
+        // method 'SltTcpStatus'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const quint8 &, std::false_type>
     >,
     nullptr
 } };
@@ -267,6 +294,8 @@ void ChatWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 11: _t->SltDownloadFiles((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 12: _t->on_toolButton_4_clicked(); break;
         case 13: _t->on_toolButton_3_clicked(); break;
+        case 14: _t->SltTcpMessage((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QJsonValue>>(_a[2]))); break;
+        case 15: _t->SltTcpStatus((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -307,13 +336,13 @@ int ChatWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 16)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 14;
+        _id -= 16;
     }
     return _id;
 }

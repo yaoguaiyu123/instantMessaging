@@ -26,9 +26,9 @@ public:
     void SetCell(QQCell *cell, const quint8 &type = 0);
     QString GetIpAddr() const;
     int GetUserId() const;
-
     // 接受服务器转发过来的信息
     void AddMessage(const QJsonValue &json);
+
     // 更新群组人员的状态
     void UpdateUserStatus(const QJsonValue &dataVal);
 signals:
@@ -74,9 +74,9 @@ private slots:
     void on_toolButton_4_clicked();
 
     void on_toolButton_3_clicked();
-    void SltTcpStatus(const quint8& state);
-    void SltTcpMessage(const quint8& type, const QJsonValue& datacal);
 
+    void SltTcpMessage(const quint8& type, const QJsonValue& dataVal);
+    void SltTcpStatus(const quint8& state);
 public slots:
 
 private:
